@@ -6,7 +6,7 @@ import { TextField, Button, Container, Grid, Typography, Box } from '@mui/materi
 import { styled } from '@mui/system';
 
 const AppBackground = styled('div')({
-    background: 'linear-gradient(to bottom, rgba(0, 188, 212, 0.4), rgba(76, 175, 80, 0.4))', // Градиент с прозрачностью
+    background: 'linear-gradient(to bottom, rgba(0, 188, 212, 0.4), rgba(76, 175, 80, 0.4))', 
     minHeight: '100vh',
     padding: '20px',
     backgroundSize: 'cover',
@@ -15,7 +15,7 @@ const AppBackground = styled('div')({
 });
 
 const SearchBox = styled(Box)({
-    backgroundColor: 'transparent', // Оставляем прозрачным
+    backgroundColor: 'transparent', 
     padding: '20px',
     borderRadius: '10px',
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
@@ -23,25 +23,25 @@ const SearchBox = styled(Box)({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    margin: '0 auto', // Центрирование по горизонтали
+    margin: '0 auto', 
     marginBottom: '20px',
 });
 
 const SearchField = styled(TextField)({
-    backgroundColor: '#ffffff', // Белый фон для текстового поля
+    backgroundColor: '#ffffff', 
     borderRadius: '5px',
     marginBottom: '10px',
     width: '100%',
 });
 
 const SearchButton = styled(Button)({
-    backgroundColor: '#1976d2', // Синий фон для кнопки
-    color: '#ffffff', // Белый текст на кнопке
+    backgroundColor: '#1976d2', 
+    color: '#ffffff', 
     borderRadius: '5px',
     '&:hover': {
-        backgroundColor: '#1565c0', // Темнее синий при наведении
+        backgroundColor: '#1565c0', 
     },
-    width: '60%', // Кнопка на всю ширину блока поиска
+    width: '60%', 
 });
 
 const StyledContainer = styled(Container)({
@@ -50,8 +50,8 @@ const StyledContainer = styled(Container)({
 });
 
 const TodayCard = styled(Grid)({
-    width: '80%', // Карточка на всю ширину контейнера
-    maxWidth: '800px', // Максимальная ширина для первой карточки
+    width: '80%', 
+    maxWidth: '800px', 
 });
 
 const WeatherDashboard: React.FC = () => {
@@ -67,11 +67,11 @@ const WeatherDashboard: React.FC = () => {
             setWeather(weatherData);
 
             const forecastData = await getForecast(city);
-            const dailyForecasts = forecastData.list.filter((_: any, index: number) => index % 8 === 0); // Каждые 24 часа
+            const dailyForecasts = forecastData.list.filter((_: any, index: number) => index % 8 === 0); 
             setForecast(dailyForecasts.slice(1, 7).map((item: any) => ({
                 ...item,
                 day: getDayOfWeek(item.dt_txt),
-            }))); // Прогноз на 6 дней
+            }))); 
         } catch (err) {
             setError('Failed to fetch weather data. Please check the city name or API key.');
         }

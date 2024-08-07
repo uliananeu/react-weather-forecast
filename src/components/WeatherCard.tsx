@@ -10,7 +10,7 @@ const WeatherCardContainer = styled(Card)({
     position: 'relative',
     maxWidth: '800px',
     margin: 'auto',
-    padding: '20px', // Устанавливаем внутренний отступ
+    padding: '20px', 
 });
 
 const WeatherContent = styled(Box)({
@@ -24,7 +24,7 @@ const WeatherIcon = styled('img')({
     width: '130px',
     height: '150px',
     objectFit: 'contain',
-    marginLeft: 'auto', // Чтобы иконка была выровнена по правому краю
+    marginLeft: 'auto', 
 });
 
 const WeatherButton = styled(Button)({
