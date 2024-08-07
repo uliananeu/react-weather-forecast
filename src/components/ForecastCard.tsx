@@ -8,10 +8,9 @@ const ForecastCardContainer = styled(Card)({
     borderRadius: '15px',
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
     margin: '10px auto',
-    padding: '15px',
+    padding: '10px',
     width: '90%',
     maxWidth: '400px',
-    backgroundColor: '#ffffff',
 });
 
 const ForecastContent = styled(Box)({
@@ -22,10 +21,11 @@ const ForecastContent = styled(Box)({
 });
 
 const ForecastIcon = styled('img')({
-    width: '80px',
-    height: '80px',
+    width: '60px',
+    height: '60px',
     objectFit: 'contain',
     marginLeft: 'auto',
+    imageRendering: 'crisp-edges',
 });
 
 interface ForecastCardProps {
@@ -39,10 +39,10 @@ const ForecastCard: React.FC<ForecastCardProps> = ({ day, temperature, descripti
     return (
         <ForecastCardContainer>
             <ForecastContent>
-                <Typography variant="h6" component="div" gutterBottom>
+                <Typography variant="h6" component="div">
                     {day}
                 </Typography>
-                <Typography variant="h6">
+                <Typography variant="body1">
                     {Math.round(temperature)}°C
                 </Typography>
                 <Typography variant="body2" color="text.secondary">

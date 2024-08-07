@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { getWeather, getForecast, getDayOfWeek, getHourlyTemperatures } from '../weatherService';
+import React, { useState, useEffect } from 'react';
+import { getWeather, getForecast, getDayOfWeek } from '../weatherService';
 import WeatherCard from './WeatherCard';
 import ForecastCard from './ForecastCard';
 import { TextField, Button, Container, Grid, Typography, Box } from '@mui/material';
 import { styled } from '@mui/system';
 
 const AppBackground = styled('div')({
-    background: 'linear-gradient(to bottom, rgba(0, 188, 212, 0.4), rgba(76, 175, 80, 0.4))',
+    background: 'linear-gradient(to bottom, rgba(0, 188, 212, 0.4), rgba(76, 175, 80, 0.4))', // Градиент с прозрачностью
     minHeight: '100vh',
     padding: '20px',
     backgroundSize: 'cover',
@@ -15,7 +15,7 @@ const AppBackground = styled('div')({
 });
 
 const SearchBox = styled(Box)({
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent', // Оставляем прозрачным
     padding: '20px',
     borderRadius: '10px',
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
@@ -23,25 +23,25 @@ const SearchBox = styled(Box)({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    margin: '0 auto',
+    margin: '0 auto', // Центрирование по горизонтали
     marginBottom: '20px',
 });
 
 const SearchField = styled(TextField)({
-    backgroundColor: '#ffffff',
+    backgroundColor: '#ffffff', // Белый фон для текстового поля
     borderRadius: '5px',
     marginBottom: '10px',
     width: '100%',
 });
 
 const SearchButton = styled(Button)({
-    backgroundColor: '#1976d2',
-    color: '#ffffff',
+    backgroundColor: '#1976d2', // Синий фон для кнопки
+    color: '#ffffff', // Белый текст на кнопке
     borderRadius: '5px',
     '&:hover': {
-        backgroundColor: '#1565c0',
+        backgroundColor: '#1565c0', // Темнее синий при наведении
     },
-    width: '60%',
+    width: '60%', // Кнопка на всю ширину блока поиска
 });
 
 const StyledContainer = styled(Container)({
@@ -50,15 +50,14 @@ const StyledContainer = styled(Container)({
 });
 
 const TodayCard = styled(Grid)({
-    width: '80%',
-    maxWidth: '800px',
+    width: '80%', // Карточка на всю ширину контейнера
+    maxWidth: '800px', // Максимальная ширина для первой карточки
 });
 
 const WeatherDashboard: React.FC = () => {
     const [city, setCity] = useState<string>('');
     const [weather, setWeather] = useState<any | null>(null);
     const [forecast, setForecast] = useState<any[]>([]);
-    const [hourlyTemperatures, setHourlyTemperatures] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     const fetchWeather = async () => {
@@ -69,14 +68,10 @@ const WeatherDashboard: React.FC = () => {
 
             const forecastData = await getForecast(city);
             const dailyForecasts = forecastData.list.filter((_: any, index: number) => index % 8 === 0); // Каждые 24 часа
-            setForecast(dailyForecasts.slice(1, 10).map((item: any) => ({
+            setForecast(dailyForecasts.slice(1, 7).map((item: any) => ({
                 ...item,
                 day: getDayOfWeek(item.dt_txt),
-            }))); // Прогноз на 10 дней
-
-            const hourlyData = await getHourlyTemperatures(city);
-            setHourlyTemperatures(hourlyData);
-
+            }))); // Прогноз на 6 дней
         } catch (err) {
             setError('Failed to fetch weather data. Please check the city name or API key.');
         }
@@ -112,7 +107,6 @@ const WeatherDashboard: React.FC = () => {
                                     description={weather.weather[0].description}
                                     humidity={weather.main.humidity}
                                     icon={weather.weather[0].icon}
-                                    hourlyTemperatures={hourlyTemperatures}
                                 />
                             </TodayCard>
                             <Grid container spacing={2} marginTop={2}>

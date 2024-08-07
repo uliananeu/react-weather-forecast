@@ -14,15 +14,6 @@ export const getForecast = async (city: string) => {
     return response.data;
 };
 
-export const getHourlyTemperatures = async (city: string) => {
-    const response = await axios.get(`${FORECAST_URL}?q=${city}&units=metric&appid=${API_KEY}`);
-    const hourlyData = response.data.list.filter((_: any, index: number) => index % 1 === 0); // Получаем данные по часам
-    return hourlyData.slice(0, 24).map((item: any) => ({
-        time: item.dt_txt.split(' ')[1],
-        temp: item.main.temp,
-    }));
-};
-
 export const getDayOfWeek = (dateString: string) => {
     const date = new Date(dateString);
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

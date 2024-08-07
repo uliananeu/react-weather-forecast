@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Typography, Box } from '@mui/material';
+import { Card, CardContent, Typography, Button, Box } from '@mui/material';
 import { styled } from '@mui/system';
 
 const WeatherCardContainer = styled(Card)({
@@ -10,8 +10,7 @@ const WeatherCardContainer = styled(Card)({
     position: 'relative',
     maxWidth: '800px',
     margin: 'auto',
-    padding: '20px',
-    backgroundColor: '#ffffff',
+    padding: '20px', // Устанавливаем внутренний отступ
 });
 
 const WeatherContent = styled(Box)({
@@ -19,28 +18,25 @@ const WeatherContent = styled(Box)({
     flexDirection: 'column',
     justifyContent: 'center',
     flex: 1,
-    overflow: 'hidden', // Убирает скроллинг, если контент выходит за рамки
 });
 
 const WeatherIcon = styled('img')({
-    width: '150px',
+    width: '130px',
     height: '150px',
     objectFit: 'contain',
-    marginLeft: 'auto',
+    marginLeft: 'auto', // Чтобы иконка была выровнена по правому краю
 });
 
-const HourlyTemperatures = styled(Box)({
-    marginTop: '10px',
-    display: 'flex',
-    flexDirection: 'column',
-    maxHeight: '200px',
-    overflowY: 'auto', // Добавляет вертикальный скролл при необходимости
+const WeatherButton = styled(Button)({
+    backgroundColor: '#1976d2',
+    color: '#ffffff',
+    borderRadius: '5px',
+    '&:hover': {
+        backgroundColor: '#1565c0',
+    },
+    width: '100%',
+    marginTop: '20px',
 });
-
-interface HourlyTemperature {
-    time: string; // Время в формате строки
-    temp: number;
-}
 
 interface WeatherCardProps {
     city: string;
@@ -48,50 +44,24 @@ interface WeatherCardProps {
     description: string;
     humidity: number;
     icon: string;
-    hourlyTemperatures: HourlyTemperature[];
 }
 
-// Функция для форматирования времени в 12-часовом формате
-const formatTime = (time: string) => {
-    const date = new Date(time);
-    if (isNaN(date.getTime())) {
-        return 'Invalid time'; // Обработка случая с некорректным временем
-    }
-    let hours = date.getHours();
-    const minutes = date.getMinutes();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // '0' hour should be '12'
-    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-    return `${hours}:${formattedMinutes} ${ampm}`;
-};
-
-const WeatherCard: React.FC<WeatherCardProps> = ({ city, temperature, description, humidity, icon, hourlyTemperatures }) => {
+const WeatherCard: React.FC<WeatherCardProps> = ({ city, temperature, description, humidity, icon }) => {
     return (
         <WeatherCardContainer>
             <WeatherContent>
-                <Typography variant="h4" component="div" gutterBottom>
+                <Typography variant="h5" component="div">
                     {city}
                 </Typography>
                 <Typography variant="h6">
                     {Math.round(temperature)}°C
                 </Typography>
-                <Typography variant="body1" color="text.secondary">
+                <Typography variant="body2" color="text.secondary">
                     {description}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     Humidity: {humidity}%
                 </Typography>
-                <HourlyTemperatures>
-                    <Typography variant="body2" color="text.primary" gutterBottom>
-                        Hourly Temperatures:
-                    </Typography>
-                    {hourlyTemperatures.map((hour, index) => (
-                        <Typography key={index} variant="body2">
-                            {formatTime(hour.time)}: {Math.round(hour.temp)}°C
-                        </Typography>
-                    ))}
-                </HourlyTemperatures>
             </WeatherContent>
             <WeatherIcon
                 src={`http://openweathermap.org/img/wn/${icon}@2x.png`}
