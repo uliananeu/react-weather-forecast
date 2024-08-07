@@ -1,26 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import WeatherDashboard from './components/WeatherDashboard';
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { styled } from '@mui/system';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#1976d2',
+        },
+        secondary: {
+            main: '#dc004e',
+        },
+    },
+});
+
+const AppContainer = styled('div')({
+    minHeight: '100vh',
+    padding: '20px',
+});
+
+const App: React.FC = () => {
+    return (
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <AppContainer>
+                <WeatherDashboard />
+            </AppContainer>
+        </ThemeProvider>
+    );
 }
 
 export default App;
