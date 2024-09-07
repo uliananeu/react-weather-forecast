@@ -6,16 +6,15 @@ import { TextField, Button, Container, Grid, Typography, Box } from '@mui/materi
 import { styled } from '@mui/system';
 
 const AppBackground = styled('div')({
-    background: 'linear-gradient(to bottom, rgba(0, 188, 212, 0.4), rgba(76, 175, 80, 0.4))', 
     minHeight: '100vh',
-    padding: '20px',
+    padding: '0px',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     width: '100%'
 });
 
 const SearchBox = styled(Box)({
-    backgroundColor: 'transparent', 
+    backgroundColor: '#ffffff', 
     padding: '20px',
     borderRadius: '10px',
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
@@ -32,14 +31,20 @@ const SearchField = styled(TextField)({
     borderRadius: '5px',
     marginBottom: '10px',
     width: '100%',
+    '& input::placeholder': {
+        color: '#b0bec5', 
+    },
+    '& label': {
+        color: '#b0bec5', 
+    },
 });
 
 const SearchButton = styled(Button)({
-    backgroundColor: '#1976d2', 
+    backgroundColor: '#4f9a94', 
     color: '#ffffff', 
     borderRadius: '5px',
     '&:hover': {
-        backgroundColor: '#1565c0', 
+        backgroundColor: '#388e8d', 
     },
     width: '60%', 
 });
@@ -50,8 +55,8 @@ const StyledContainer = styled(Container)({
 });
 
 const TodayCard = styled(Grid)({
-    width: '80%', 
-    maxWidth: '800px', 
+    width: '90%', 
+    maxWidth: '900px', 
 });
 
 const WeatherDashboard: React.FC = () => {
@@ -82,7 +87,8 @@ const WeatherDashboard: React.FC = () => {
             <StyledContainer>
                 <SearchBox>
                     <SearchField
-                        label="City"
+                        label="Enter a city name"
+                        placeholder="E.g., Helsinki, New York, London"
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
                         variant="outlined"
@@ -93,7 +99,7 @@ const WeatherDashboard: React.FC = () => {
                         onClick={fetchWeather}
                         fullWidth
                     >
-                        Get Weather
+                        Search
                     </SearchButton>
                 </SearchBox>
                 {error && <Typography color="error">{error}</Typography>}
@@ -102,7 +108,6 @@ const WeatherDashboard: React.FC = () => {
                         <Grid container spacing={2} marginTop={2} direction="column" alignItems="center">
                             <TodayCard item xs={12}>
                                 <WeatherCard
-                                    city={weather.name}
                                     temperature={weather.main.temp}
                                     description={weather.weather[0].description}
                                     humidity={weather.main.humidity}

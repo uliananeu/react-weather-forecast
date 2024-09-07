@@ -1,16 +1,17 @@
 import React from 'react';
-import { Card, CardContent, Typography, Button, Box } from '@mui/material';
+import { Card, Typography, Box } from '@mui/material';
 import { styled } from '@mui/system';
 
 const WeatherCardContainer = styled(Card)({
     display: 'flex',
     alignItems: 'center',
-    borderRadius: '15px',
-    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
-    position: 'relative',
-    maxWidth: '800px',
+    borderRadius: '10px', 
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', 
+    maxWidth: '350px', 
     margin: 'auto',
-    padding: '20px', 
+    padding: '10px',
+    backgroundColor: '#ffffff',
+    color: '#000000',
 });
 
 const WeatherContent = styled(Box)({
@@ -21,39 +22,27 @@ const WeatherContent = styled(Box)({
 });
 
 const WeatherIcon = styled('img')({
-    width: '130px',
-    height: '150px',
+    width: '80px', 
+    height: '80px',
     objectFit: 'contain',
-    marginLeft: 'auto', 
-});
-
-const WeatherButton = styled(Button)({
-    backgroundColor: '#1976d2',
-    color: '#ffffff',
-    borderRadius: '5px',
-    '&:hover': {
-        backgroundColor: '#1565c0',
-    },
-    width: '100%',
-    marginTop: '20px',
+    marginLeft: 'auto',
 });
 
 interface WeatherCardProps {
-    city: string;
     temperature: number;
     description: string;
     humidity: number;
     icon: string;
 }
 
-const WeatherCard: React.FC<WeatherCardProps> = ({ city, temperature, description, humidity, icon }) => {
+const WeatherCard: React.FC<WeatherCardProps> = ({ temperature, description, humidity, icon }) => {
     return (
         <WeatherCardContainer>
             <WeatherContent>
-                <Typography variant="h5" component="div">
-                    {city}
+                <Typography variant="h6" component="div">
+                    Today
                 </Typography>
-                <Typography variant="h6">
+                <Typography variant="h5">
                     {Math.round(temperature)}°C
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
