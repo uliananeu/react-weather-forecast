@@ -4,6 +4,7 @@ import WeatherCard from './WeatherCard';
 import ForecastCard from './ForecastCard';
 import { TextField, Button, Container, Grid, Typography, Box } from '@mui/material';
 import { styled } from '@mui/system';
+import LoaderComponent from './Loader';
 
 const AppBackground = styled('div')({
     minHeight: '100vh',
@@ -64,10 +65,14 @@ const WeatherDashboard: React.FC = () => {
     const [weather, setWeather] = useState<any | null>(null);
     const [forecast, setForecast] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(false); 
 
     const fetchWeather = async () => {
+        setLoading(true); 
+        setError(null);   
+
+        console.log("Fetching weather data..."); 
         try {
-            setError(null);
             const weatherData = await getWeather(city);
             setWeather(weatherData);
 
@@ -78,8 +83,11 @@ const WeatherDashboard: React.FC = () => {
                 day: getDayOfWeek(item.dt_txt),
             }))); 
         } catch (err) {
+            console.error(err);
             setError('Failed to fetch weather data. Please check the city name or API key.');
         }
+        setLoading(false); 
+        console.log("Weather data loaded."); 
     };
 
     return (
@@ -102,8 +110,15 @@ const WeatherDashboard: React.FC = () => {
                         Search
                     </SearchButton>
                 </SearchBox>
+                
+                {}
                 {error && <Typography color="error">{error}</Typography>}
-                {weather && (
+
+                {}
+                {loading && <LoaderComponent />}
+
+                {}
+                {!loading && weather && (
                     <>
                         <Grid container spacing={2} marginTop={2} direction="column" alignItems="center">
                             <TodayCard item xs={12}>
@@ -132,6 +147,6 @@ const WeatherDashboard: React.FC = () => {
             </StyledContainer>
         </AppBackground>
     );
-}
+};
 
 export default WeatherDashboard;
